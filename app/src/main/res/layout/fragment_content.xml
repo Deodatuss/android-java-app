@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/dataActivityButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Переглянути дані"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        />
+
+    <EditText
+        android:id="@+id/inputField"
+        android:layout_width="match_parent"
+        android:layout_marginStart="80dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dataActivityButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:inputType="textMultiLine"
+        android:lines="7"
+        android:hint="Введіть запитання/завдання"
+        >
+    </EditText>
+
+
+    <RadioGroup
+        android:id="@+id/taskDifficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputField"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="60dp"
+        >
+        <RadioButton
+            android:id="@+id/taskEasy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Easy"/>
+        <RadioButton
+            android:id="@+id/taskMid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mid"/>
+        <RadioButton
+            android:id="@+id/taskHard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hard"/>
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/taskType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputField"
+        android:layout_toRightOf="@id/taskDifficulty"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="100dp"
+
+        >
+        <RadioButton
+            android:id="@+id/taskTheory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Theoretical" />
+        <RadioButton
+            android:id="@+id/taskPractice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Practical" />
+    </RadioGroup>
+    <Button
+        android:id="@+id/okButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taskDifficulty"
+        android:text="OK"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        />
+    <TextView
+        android:id="@+id/dateTextView"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="80dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/okButton"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp"
+        android:lines="9"
+        android:layout_marginTop="15dp"
+        />
+
+</RelativeLayout>
