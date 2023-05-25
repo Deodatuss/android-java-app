@@ -15,6 +15,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Collections;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link InputFragment#newInstance} factory method to
@@ -108,6 +110,7 @@ public class InputFragment extends Fragment {
             if(validateInput())
             {
                 fragmentSendDataListener.onSendData(infoAnswer(view));
+                saveAnswer(view);
                 clearVisualInput();
             }});
         return view;
@@ -132,6 +135,26 @@ public class InputFragment extends Fragment {
         return "тип: " + typeButton.getText() + "\n" +
             "важкість: " + difficultyButton.getText() + "\n" +
                 "текст: " + inputField.getText();
+    }
+
+    private void saveAnswer (View v) {
+        RadioButton difficultyButton = v.findViewById(
+                taskDifficulty.getCheckedRadioButtonId());
+        RadioButton typeButton = v.findViewById(
+                taskType.getCheckedRadioButtonId());
+        QuestionOrTask s = new QuestionOrTask(
+                typeButton.getText().toString(),
+                difficultyButton.getText().toString(),
+                inputField.getText().toString());
+        try {
+            JSONHelper.exportToJSON(getActivity(), Collections.singletonList(s));
+            Toast.makeText(getActivity(), "Дані успішно збережено.", Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception e) {
+            Toast.makeText(getActivity(), "Помилка збереження файлу: \n"+
+                    e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private void clearVisualInput() {
