@@ -1,5 +1,6 @@
 package com.example.triple_app;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +34,36 @@ public class InputFragment extends Fragment {
     public InputFragment() {
         // Required empty public constructor
     }
+    /**
+     *
+     *
+     *
+     * */
+
+    private Button dataActivityButton, okButton;
+    private EditText inputField;
+    private RadioGroup taskDifficulty, taskType;
+
+
+    interface OnFragmentSendDataListener {
+        void onSendData(String data);
+    }
+
+    private OnFragmentSendDataListener fragmentSendDataListener;
+    String[] countries = { "Бразилия", "Аргентина", "Колумбия", "Чили", "Уругвай"};
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            fragmentSendDataListener = (OnFragmentSendDataListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " должен реализовывать интерфейс OnFragmentInteractionListener");
+        }
+    }
+
 
     /**
      * Use this factory method to create a new instance of
@@ -55,10 +92,55 @@ public class InputFragment extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_input, container, false);
+        View view =  inflater.inflate(R.layout.fragment_input, container, false);
+        okButton = view.findViewById(R.id.okButton);
+        dataActivityButton = view.findViewById(R.id.dataActivityButton);
+        inputField = view.findViewById(R.id.inputField);
+        taskDifficulty = view.findViewById(R.id.taskDifficulty);
+        taskType = view.findViewById(R.id.taskType);
+
+        okButton.setOnClickListener(v -> {
+            if(validateInput())
+            {
+                fragmentSendDataListener.onSendData(infoAnswer(view));
+                clearVisualInput();
+            }});
+        return view;
+    }
+
+    private boolean validateInput () {
+        if (taskDifficulty.getCheckedRadioButtonId() == -1
+        || taskDifficulty.getCheckedRadioButtonId() == -1
+        || inputField.getText().toString().matches(""))
+        {
+            Toast.makeText(getActivity(), "Не всі дані заповнено.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private String infoAnswer (View v) {
+        RadioButton difficultyButton = v.findViewById(
+                taskDifficulty.getCheckedRadioButtonId());
+        RadioButton typeButton = v.findViewById(
+                taskType.getCheckedRadioButtonId());
+        return "тип: " + typeButton.getText() + "\n" +
+            "важкість: " + difficultyButton.getText() + "\n" +
+                "текст: " + inputField.getText();
+    }
+
+    private void clearVisualInput() {
+        inputField.setText(null);
+        taskDifficulty.clearCheck();
+        taskType.clearCheck();
+    }
+
+    private void sendToActivity() {
+
     }
 }
