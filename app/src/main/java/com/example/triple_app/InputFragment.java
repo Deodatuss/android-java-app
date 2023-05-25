@@ -1,6 +1,7 @@
 package com.example.triple_app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Collections;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -113,6 +115,11 @@ public class InputFragment extends Fragment {
                 saveAnswer(view);
                 clearVisualInput();
             }});
+        dataActivityButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), DataActivity.class);
+            startActivity(intent);
+        });
+
         return view;
     }
 
@@ -142,12 +149,14 @@ public class InputFragment extends Fragment {
                 taskDifficulty.getCheckedRadioButtonId());
         RadioButton typeButton = v.findViewById(
                 taskType.getCheckedRadioButtonId());
+        List<QuestionOrTask> oldquestions = JSONHelper.importFromJSON(getActivity());
         QuestionOrTask s = new QuestionOrTask(
                 typeButton.getText().toString(),
                 difficultyButton.getText().toString(),
                 inputField.getText().toString());
+        oldquestions.add(s);
         try {
-            JSONHelper.exportToJSON(getActivity(), Collections.singletonList(s));
+            JSONHelper.exportToJSON(getActivity(), oldquestions);
             Toast.makeText(getActivity(), "Дані успішно збережено.", Toast.LENGTH_SHORT).show();
         }
         catch (Exception e) {

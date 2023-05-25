@@ -34,4 +34,10 @@ public class QuestionOrTask {
     public void setQuestionOrTask(String questionOrTask) {
         this.questionOrTask = questionOrTask;
     }
+
+    public String toString(){
+        return "type: "+ type +"\n" +
+                "difficulty: "+ difficulty +"\n" +
+                "question: "+ questionOrTask;
+    }
 }
